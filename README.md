@@ -159,4 +159,4 @@ Sollte es zu einer Fehlermeldung kommen, dann sende uns den Fehlertext einfach p
 
 <img src="https://assets.angular.schule/logo-angular-schule.png" height="60">
 
-### &copy; https://angular.schule | Stand: 27.11.2025
+### &copy; https://angular.schule | Stand: 09.12.2025
