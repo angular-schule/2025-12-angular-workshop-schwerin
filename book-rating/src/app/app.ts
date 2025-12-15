@@ -8,5 +8,9 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('book-rating');
+  protected readonly title = signal('Book Rating 🥶');
+
+  constructor() {
+    setTimeout(() => this.title.set('Book Rating'), 1000);
+  }
 }
