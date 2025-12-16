@@ -32,4 +32,11 @@ export class DashboardPage {
     }
   ]);
 
+  doRateUp(book: Book) {
+
+  }
+
+  doRateDown(book: Book) {
+
+  }
 }
