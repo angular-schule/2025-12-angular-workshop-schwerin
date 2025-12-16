@@ -3,6 +3,7 @@
 </pre>
 -->
 
-<app-book-card [book]="books()[0]" />
-<app-book-card [book]="books()[1]" />
-<app-book-card [book]="books()[2]" />
+@for (b of books(); track b.isbn) {
+  <app-book-card [book]="b" />
+}
+
