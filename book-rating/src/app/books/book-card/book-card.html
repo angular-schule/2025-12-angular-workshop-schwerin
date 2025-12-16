@@ -1,7 +1,26 @@
-@let b = book();
+<article class="card mb-4">
+  <div class="card-body bg-light">
+    <img class="img-thumbnail float-end" alt=""
+      src="https://api.angular.schule/avatar/{{ book().rating }}">
+    <header class="card-title">
+      <h2>{{ book().title }}</h2>
+      <span class="badge rounded-pill text-bg-secondary">
+        Bewertung: {{ book().rating }}
+      </span>
+    </header>
+    <p>{{ book().description }}</p>
 
-<h2>{{ b.title }}</h2>
+    <!--
+    Ganz mieser code:
 
-<p>
-  {{ b.description }}
-</p>
+    1. Nicht bei Signal .set() / .update() verwendet
+    2. Wert im Signal verändert (mutiert)
+    3. Logik im Template
+    4. Funktionalität nicht sofort offensichtlich
+    5. Keine reine Anzeige komponente mehr -- Seperation of Concerns
+    -->
+
+    <button (click)="book().rating = book().rating - 1" class="btn btn-primary">-1</button>
+    <button (click)="book().rating = book().rating + 1" class="btn btn-primary ms-2">+1</button>
+  </div>
+</article>
