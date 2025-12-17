@@ -1,4 +1,4 @@
-<app-book-create />
+<app-book-create (createBook)="doAddBook($event)" />
 
 @for (b of books(); track b.isbn) {
   <app-book-card
