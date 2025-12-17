@@ -4,6 +4,7 @@ import { BookCard } from "../book-card/book-card";
 import { BookRatingHelper } from '../shared/book-rating-helper';
 import { readonly } from '@angular/forms/signals';
 import { BookCreate } from "../book-create/book-create";
+import { BookStore } from '../shared/book-store';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -13,33 +14,15 @@ import { BookCreate } from "../book-create/book-create";
 })
 export class DashboardPage {
 
-  // constructor() {
-  //   throw '💩';
-  // }
-
   bookRatingHelper = inject(BookRatingHelper);
+  bookStore = inject(BookStore);
 
-  // 🦆
-  readonly books = signal<Book[]>([
-    {
-      isbn: '000',
-      title: 'Angular',
-      description: 'Bestes Angular Buch überhaupt',
-      rating: 5
-    },
-    {
-      isbn: '111',
-      title: 'React',
-      description: 'Auch ganz nettes Buch',
-      rating: 3
-    },
-    {
-      isbn: '222',
-      title: 'jQuery',
-      description: 'Super altes Buch',
-      rating: 1
-    }
-  ]);
+  readonly books = signal<Book[]>([]);
+
+  constructor() {
+    this.bookStore.getBooks().subscribe(books => this.books.set(books));
+  }
+
 
   doRateUp(book: Book) {
     // const ratedBook = this.bookRatingHelper.rateUp(book);
