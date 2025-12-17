@@ -12,6 +12,10 @@ import { readonly } from '@angular/forms/signals';
 })
 export class DashboardPage {
 
+  // constructor() {
+  //   throw '💩';
+  // }
+
   bookRatingHelper = inject(BookRatingHelper);
 
   // 🦆
