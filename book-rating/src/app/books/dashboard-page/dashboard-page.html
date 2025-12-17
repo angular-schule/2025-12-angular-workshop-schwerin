@@ -8,3 +8,13 @@
   />
 }
 
+{{ isbn() }}
+
+@if (bookResource.hasValue()) {
+  <pre>{{ bookResource.value() | json }}</pre>
+
+  Loading: {{ bookResource.isLoading() }}<br>
+  Status: {{ bookResource.status() }}
+}
+
+<button (click)="isbn.set('9783864907791')">Angular 3</button>

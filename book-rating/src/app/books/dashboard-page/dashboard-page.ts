@@ -5,10 +5,13 @@ import { BookRatingHelper } from '../shared/book-rating-helper';
 import { readonly } from '@angular/forms/signals';
 import { BookCreate } from "../book-create/book-create";
 import { BookStore } from '../shared/book-store';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { JsonPipe } from '@angular/common';
+import { httpResource } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [BookCard, BookCreate],
+  imports: [BookCard, BookCreate, JsonPipe],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
 })
@@ -49,4 +52,15 @@ export class DashboardPage {
       .sort((a, b) => b.rating - a.rating)
     )
   }
+
+  isbn = signal('9783864909467');
+
+  bookResource2 = rxResource({
+    params: () => this.isbn(),
+    stream: ({ params: isbn }) => this.bookStore.getSingleBook(isbn)
+  })
+
+  bookResource = httpResource<Book>(
+    () => `https://api.angular.schule/books/${ this.isbn() }`
+  )
 }
