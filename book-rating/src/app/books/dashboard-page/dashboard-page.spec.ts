@@ -10,19 +10,8 @@ describe('DashboardPage', () => {
 
   beforeEach(async () => {
 
-    // Der ganz klassische Mock
-    const ratingMock = {
-      rateUp: (book: Book) => { console.log('Unter meiner Kontrolle:', book); return book }
-    }
-
     await TestBed.configureTestingModule({
       imports: [DashboardPage],
-      providers: [
-        {
-          provide: BookRatingHelper,
-          useValue: ratingMock
-        }
-      ]
     })
     .compileComponents();
 
@@ -33,10 +22,14 @@ describe('DashboardPage', () => {
 
   it('should create', () => {
 
-    console.log('HALLO');
-    component.doRateUp({} as Book);
+    const testBook = {} as Book;
 
-    expect(component).toBeTruthy();
+    const bookRatingHelper = TestBed.inject(BookRatingHelper);
+    const spy = vi.spyOn(bookRatingHelper, 'rateUp');
+
+    component.doRateUp(testBook);
+
+    expect(spy).toHaveBeenCalledExactlyOnceWith(testBook);
 
   });
 });

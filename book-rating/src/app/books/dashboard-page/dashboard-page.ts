@@ -41,11 +41,11 @@ export class DashboardPage {
   ]);
 
   doRateUp(book: Book) {
-    const ratedBook = this.bookRatingHelper.rateUp(book);
-    // const ratedBook = {
-    //   ...book,
-    //   rating: Math.min(book.rating + 1, 5)
-    // }
+    // const ratedBook = this.bookRatingHelper.rateUp(book);
+    const ratedBook = {
+      ...book,
+      rating: Math.min(book.rating + 1, 5)
+    }
     this.updateAndSortBooks(ratedBook);
   }
 
