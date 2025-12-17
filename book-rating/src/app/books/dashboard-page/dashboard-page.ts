@@ -61,6 +61,14 @@ export class DashboardPage {
   })
 
   bookResource = httpResource<Book>(
-    () => `https://api.angular.schule/books/${ this.isbn() }`
+    () => `https://api.angular.schule/books/${this.isbn()}`,
+    {
+      defaultValue: {
+        isbn: '',
+        title: '',
+        description: '',
+        rating: 1
+      }
+    }
   )
 }
