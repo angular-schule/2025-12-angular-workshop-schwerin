@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Book } from '../shared/book';
 import { BookCard } from "../book-card/book-card";
+import { BookRatingHelper } from '../shared/book-rating-helper';
+import { readonly } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -9,6 +11,8 @@ import { BookCard } from "../book-card/book-card";
   styleUrl: './dashboard-page.scss',
 })
 export class DashboardPage {
+
+  bookRatingHelper = inject(BookRatingHelper);
 
   // 🦆
   readonly books = signal<Book[]>([
@@ -33,10 +37,18 @@ export class DashboardPage {
   ]);
 
   doRateUp(book: Book) {
-
+    const ratedBook = this.bookRatingHelper.rateUp(book);
+    this.updateAndSortBooks(ratedBook);
   }
 
   doRateDown(book: Book) {
+    const ratedBook = this.bookRatingHelper.rateDown(book);
+    this.updateAndSortBooks(ratedBook);
+  }
 
+  updateAndSortBooks(ratedBook: Book) {
+    this.books.update(books => books
+      .map(x => x.isbn === ratedBook.isbn ? ratedBook : x)
+      .sort((a, b) => b.rating - a.rating));
   }
 }
