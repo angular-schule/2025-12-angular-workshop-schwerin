@@ -51,9 +51,13 @@ export class BookCreate {
 
   submitForm() {
 
-    console.log(this.bookForm().value());
+    const newBook = this.bookForm().value();
 
-    // ????
+    // Hands On:
+    // 1. Erzeuge ein Event mit dem Namen createBook
+    // 2. Versende das neue Buch
+    // 3. Empfange das neue Buch im Dashboard
+    // 4. Füge das neue Buch dem Buch-Array hinzu, achte auf Immutablity!
 
     this.bookForm().reset({
       isbn: '',
