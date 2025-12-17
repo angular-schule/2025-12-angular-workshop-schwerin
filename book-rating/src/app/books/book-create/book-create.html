@@ -1,2 +1,36 @@
-<p>book-create works!</p>
+<form>
 
+  <div class="form-group">
+    <label for="isbnField">ISBN</label>
+    <input id="isbnField" type="text" class="form-control" />
+
+    @if (bookForm.isbn().touched()) {
+      @for (e of bookForm.isbn().errors(); track e.kind) {
+        <div class="feedback-error">{{ e.message }}</div>
+      }
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="titleField">Titel</label>
+    <input id="titleField" type="text" class="form-control" />
+
+    @if (bookForm.title().touched()) {
+      @for (e of bookForm.title().errors(); track e.kind) {
+        <div class="feedback-error">{{ e.message }}</div>
+      }
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="descField">Beschreibung</label>
+    <textarea id="descField" class="form-control"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="ratingField">Bewertung</label>
+    <input id="ratingField" type="number" class="form-control" />
+  </div>
+
+  <button type="submit" class="btn btn-primary mb-4">Abschicken</button>
+</form>
