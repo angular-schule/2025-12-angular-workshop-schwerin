@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Field, form, max, maxLength, min, minLength, pattern, required, schema, validate } from '@angular/forms/signals';
+import { Field, form, max, maxLength, min, minLength, pattern, provideSignalFormsConfig, required, schema, validate } from '@angular/forms/signals';
 import { Book } from '../shared/book';
 
 @Component({
@@ -7,6 +7,13 @@ import { Book } from '../shared/book';
   imports: [Field],
   templateUrl: './book-create.html',
   styleUrl: './book-create.scss',
+  providers: [
+    provideSignalFormsConfig({
+      classes: {
+        'invalid': state => state.invalid() && state.touched()
+      }
+    })
+  ]
 })
 export class BookCreate {
 
@@ -28,7 +35,7 @@ export class BookCreate {
     maxLength(path.isbn, 15, { message: 'Die ISBN darf max. 15 Zeichen lang sein.' });
 
     min(path.rating, 1, { message: 'Das Rating muss min. 1 sein.' });
-    max(path.rating, 1, { message: 'Das Rating muss max. 5 sein.' });
+    max(path.rating, 5, { message: 'Das Rating muss max. 5 sein.' });
 
     validate(path.isbn, ctx => {
       if (!ctx.value().startsWith('978')) {
@@ -41,4 +48,21 @@ export class BookCreate {
     })
 
   }));
+
+  submitForm() {
+
+    console.log(this.bookForm().value());
+
+    // ????
+
+    this.bookForm().reset({
+      isbn: '',
+      title: '',
+      description: '',
+      rating: 1
+    });
+
+    // verhindert Neuladen der Seite
+    return false;
+  }
 }
