@@ -1,11 +1,15 @@
-<h2>{{ isbn() }}</h2>
+
+<pre>{{ book() | json }}</pre>
+
+
+<!-- <h2>{{ isbn() }}</h2>
 
 @if(book.hasValue()) {
   <app-book-card [book]="book.value()" />
 }
 @if(book.isLoading()) {
   Bitte warten...
-}
+} -->
 
 <a routerLink="/books/9783864909467">Gehe zu Angular</a><br>
 <a routerLink="/books/9783864905520">Gehe zu React</a>

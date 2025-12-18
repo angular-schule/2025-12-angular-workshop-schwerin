@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BookStore } from '../shared/book-store';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { BookCard } from '../book-card/book-card';
 import { rxResourceFixed } from '../shared/rx-resource-fixed';
+import { JsonPipe } from '@angular/common';
+import { map, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-book-details-page',
-  imports: [RouterLink, BookCard],
+  imports: [RouterLink, BookCard, JsonPipe],
   templateUrl: './book-details-page.html',
   styleUrl: './book-details-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -15,6 +17,17 @@ import { rxResourceFixed } from '../shared/rx-resource-fixed';
 export class BookDetailsPage {
 
   bookStore = inject(BookStore);
+  router = inject(ActivatedRoute);
+
+  book = toSignal(this.router.paramMap.pipe(
+    map(paramMap => paramMap.get('isbn') || ''),
+    mergeMap(isbn => this.bookStore.getSingleBook(isbn))
+  ))
+
+
+
+
+  /*
 
   isbn = input.required<string>();
 
@@ -29,4 +42,5 @@ export class BookDetailsPage {
   //   params: () => this.isbn(),
   //   stream: ({ params: isbn }) => this.bookStore.getSingleBook(isbn)
   // }))
+  */
 }
