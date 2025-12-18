@@ -5,7 +5,8 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { BookCard } from '../book-card/book-card';
 import { rxResourceFixed } from '../shared/rx-resource-fixed';
 import { JsonPipe } from '@angular/common';
-import { concatMap, map, mergeMap } from 'rxjs';
+import { catchError, concatMap, map, mergeMap, of, retry, switchMap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-book-details-page',
@@ -21,7 +22,18 @@ export class BookDetailsPage {
 
   book = toSignal(this.router.paramMap.pipe(
     map(paramMap => paramMap.get('isbn') || ''),
-    concatMap(isbn => this.bookStore.getSingleBook(isbn))
+    switchMap(isbn => this.bookStore.getSingleBook(isbn).pipe(
+      retry({
+        count: 3,
+        delay: 500
+      }),
+      catchError((e: HttpErrorResponse) => of({
+        isbn: '000',
+        title: 'ERRROR',
+        description: e.message,
+        rating: 1
+      }))
+    ))
   ))
 
 
