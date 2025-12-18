@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Book } from '../shared/book';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-book-card',
   templateUrl: './book-card.html',
+  imports: [RouterLink],
   styleUrl: './book-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
