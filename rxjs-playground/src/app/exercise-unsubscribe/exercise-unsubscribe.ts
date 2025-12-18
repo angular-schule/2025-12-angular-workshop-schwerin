@@ -11,26 +11,24 @@ import { HistoryWindow } from '../shared/history-window/history-window';
 export class ExerciseUnsubscribe implements OnDestroy {
 
   logStream$ = new ReplaySubject<unknown>();
+  subscription: Subscription;
 
   /**
    * Öffne die Browser-Console: Dort siehst Du den Output eines Observables, das jede Sekunde einen Wert generiert.
    * Navigiere zurück auf die Startseite und beobachte die Console:
    * Die Subscription läuft weiter. Wir haben einen klassischen Memory Leak erzeugt ...
-   * 
+   *
    * Sorge dafür, dass die Subscription in der Methode ngOnDestroy() beendet wird!
    * Sie wird beim Buttonklick und beim Wegnavigieren ausgelöst.
-   * 
+   *
    * Es gibt noch weitere Wege, das Problem zu lösen ...
    */
   constructor() {
     const interval$ = timer(0, 1000);
 
-    interval$.pipe(
+    this.subscription = interval$.pipe(
 
-      /******************************/
 
-      
-      /******************************/
 
     ).subscribe({
       next: e => this.log(e),
@@ -40,6 +38,7 @@ export class ExerciseUnsubscribe implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   log(msg: unknown) {
