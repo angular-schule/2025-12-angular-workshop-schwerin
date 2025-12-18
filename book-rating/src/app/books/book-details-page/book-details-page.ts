@@ -5,7 +5,7 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { BookCard } from '../book-card/book-card';
 import { rxResourceFixed } from '../shared/rx-resource-fixed';
 import { JsonPipe } from '@angular/common';
-import { map, mergeMap } from 'rxjs';
+import { concatMap, map, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-book-details-page',
@@ -21,7 +21,7 @@ export class BookDetailsPage {
 
   book = toSignal(this.router.paramMap.pipe(
     map(paramMap => paramMap.get('isbn') || ''),
-    mergeMap(isbn => this.bookStore.getSingleBook(isbn))
+    concatMap(isbn => this.bookStore.getSingleBook(isbn))
   ))
 
 
