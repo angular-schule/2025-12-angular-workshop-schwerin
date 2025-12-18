@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { BookStore } from '../shared/book-store';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { BookCard } from '../book-card/book-card';
+import { rxResourceFixed } from '../shared/rx-resource-fixed';
 
 @Component({
   selector: 'app-book-details-page',
@@ -17,11 +18,15 @@ export class BookDetailsPage {
 
   isbn = input.required<string>();
 
-  book = rxResource({
+  // Johannes seine Lösung
+  book = rxResourceFixed({
     params: () => this.isbn(),
     stream: ({ params: isbn }) => this.bookStore.getSingleBook(isbn)
   })
 
+  // offizielle "Lösung"
+  // book = withPreviousValue(rxResource({
+  //   params: () => this.isbn(),
+  //   stream: ({ params: isbn }) => this.bookStore.getSingleBook(isbn)
+  // }))
 }
-
-// weiter um 10:05 Uhr
