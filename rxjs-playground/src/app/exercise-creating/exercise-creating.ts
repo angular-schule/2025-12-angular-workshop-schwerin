@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, of, from, timer, interval, ReplaySubject, map, filter } from 'rxjs';
+import { Observable, of, from, timer, interval, ReplaySubject, map, filter, share } from 'rxjs';
 
 import { HistoryWindow } from '../shared/history-window/history-window';
 
@@ -25,14 +25,19 @@ export class ExerciseCreating {
     /******************************/
 
     const observer = {
-      next: (e: string) => this.log(e),
+      next: (e: number) => this.log(e),
       error: (err: any) => this.log(err),
       complete: () => this.log('COMPLETE')
     }
 
-    const observable = of('😄', '😇', '😎');
+    // const observable = of('😄', '😇', '😎');
+    const observable = interval(1000).pipe(share());
+
 
     observable.subscribe(observer);
+
+    window.setTimeout(() => observable.subscribe(observer), 3000)
+
 
 
 
