@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: 'books', component: DashboardPage, title: 'Dashboard' },
   { path: 'books/:isbn', component: BookDetailsPage, title: 'Details' },
   { path: '', redirectTo: 'books', pathMatch: 'full' }
+  // { path: '**', component: NotFoundPage }
 
 ];
