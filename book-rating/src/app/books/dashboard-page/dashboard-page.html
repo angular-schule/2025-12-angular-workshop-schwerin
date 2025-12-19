@@ -8,6 +8,10 @@
   />
 }
 
+@if(loading()) {
+  <h2>Loading...</h2>
+}
+
 {{ isbn() }}
 
 @if (bookResource.hasValue()) {

@@ -8,6 +8,8 @@ import { BookStore } from '../shared/book-store';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { JsonPipe } from '@angular/common';
 import { httpResource } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { selectBooks, selectBooksLoading } from '../store/book.selectors';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -20,37 +22,41 @@ export class DashboardPage {
   bookRatingHelper = inject(BookRatingHelper);
   bookStore = inject(BookStore);
 
-  readonly books = signal<Book[]>([]);
+  books = inject(Store).selectSignal(selectBooks)
+  loading = inject(Store).selectSignal(selectBooksLoading)
+
+
+  // readonly books = signal<Book[]>([]);
 
   constructor() {
-    this.bookStore.getBooks().subscribe(books => this.books.set(books));
+    // this.bookStore.getBooks().subscribe(books => this.books.set(books));
   }
 
 
   doRateUp(book: Book) {
     // const ratedBook = this.bookRatingHelper.rateUp(book);
-    const ratedBook = {
-      ...book,
-      rating: Math.min(book.rating + 1, 5)
-    }
-    this.updateAndSortBooks(ratedBook);
+    // const ratedBook = {
+    //   ...book,
+    //   rating: Math.min(book.rating + 1, 5)
+    // }
+    // this.updateAndSortBooks(ratedBook);
   }
 
   doRateDown(book: Book) {
-    const ratedBook = this.bookRatingHelper.rateDown(book);
-    this.updateAndSortBooks(ratedBook);
+    // const ratedBook = this.bookRatingHelper.rateDown(book);
+    // this.updateAndSortBooks(ratedBook);
   }
 
   updateAndSortBooks(ratedBook: Book) {
-    this.books.update(books => books
-      .map(x => x.isbn === ratedBook.isbn ? ratedBook : x)
-      .sort((a, b) => b.rating - a.rating));
+    // this.books.update(books => books
+    //   .map(x => x.isbn === ratedBook.isbn ? ratedBook : x)
+    //   .sort((a, b) => b.rating - a.rating));
   }
 
   doAddBook(newBook: Book) {
-    this.books.update(books => [...books, newBook]
-      .sort((a, b) => b.rating - a.rating)
-    )
+    // this.books.update(books => [...books, newBook]
+    //   .sort((a, b) => b.rating - a.rating)
+    // )
   }
 
   isbn = signal('9783864909467');

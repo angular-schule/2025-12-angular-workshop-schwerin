@@ -1,5 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { BookActions } from './books/store/book.actions';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +10,9 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('Book Rating 🥶');
+  protected readonly title = signal('Book Rating');
 
-  constructor() {
-    setTimeout(() => this.title.set('Book Rating'), 1000);
+  constructor(store: Store) {
+    store.dispatch(BookActions.loadBooks())
   }
 }
